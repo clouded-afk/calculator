@@ -27,6 +27,10 @@
         // should only work if the user enters a number or operator, user should not be able to delete on a result of an operation
     // Add keyboard support
 
+let firstNumber = ""
+let secondNumber = ""
+let operatorChoice = ""
+
 function addition(firstNum, secondNum) {
     return firstNum + secondNum;
 };
@@ -41,8 +45,24 @@ function division(firstNum, secondNum) {
     } else {
         return firstNum / secondNum;
     }
-}
+};
 
 function multiplication(firstNum, secondNum) {
     return firstNum * secondNum;
-}
+};
+
+function operate(operator, firstNum, secondNum) {
+    let operator = operatorChoice;
+    let firstNum = firstNumber;
+    let secondNum = secondNumber;
+
+    if (operator === "+") {
+        return addition(firstNum, secondNum);
+    } else if (operator === "-") {
+        return subtraction(firstNum, secondNum);
+    } else if (operator === "*") {
+        return multiplication(firstNum, secondNum);
+    } else if (operator === "/") {
+        return division(firstNum, secondNum);
+    }
+};
