@@ -26,3 +26,23 @@
     // Add a backspace button
         // should only work if the user enters a number or operator, user should not be able to delete on a result of an operation
     // Add keyboard support
+
+function addition(firstNum, secondNum) {
+    return firstNum + secondNum;
+};
+
+function subtraction(firstNum, secondNum) {
+    return firstNum - secondNum;
+};
+
+function division(firstNum, secondNum) {
+    if (secondNum === 0) {
+        return "ERROR"
+    } else {
+        return firstNum / secondNum;
+    }
+}
+
+function multiplication(firstNum, secondNum) {
+    return firstNum * secondNum;
+}
