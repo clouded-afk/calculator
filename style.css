@@ -1,3 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
 * {
     background-color: bisque;
+    margin: auto;
+}
+
+.calculator-container {
+    margin-top: 100px;
+    height: 600px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: hsl(0, 0%, 20%);
+    padding: 10px;
+}
+
+.display-container {
+    height: 100px;
+    background-color: hsl(106, 9%, 46%);
+    width: 350px;
+    border-radius: 10px;
+    margin-top: 25px;
+    padding: 10px;
+    font-family: "Orbitron", sans-serif;
+    display: flex;
+    align-items: center;
+}
+
+.button-container {
+    height: 400px;
+    width: 350px;
+    margin: auto;
+    background-color: hsl(0, 0%, 25%);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.row {
+    height: 80px;
+    display: flex;
+    background-color: hsl(0, 0%, 25%);
+}
+
+.num-btn, .operator-btn, .decimal {
+    border-radius: 40px;
+    font-size: 20px;
+    padding: 20px;
+    width: 75px;
+}
+
+
+.clear-btn, .del-btn{
+    padding: 20px;
+    width: 120px;
+    font-size: 16px;
+    border-radius: 40px;
+    background-color: hsl(0, 0%, 70%);
+    border: 1px solid hsl(0, 0%, 70%);
+}
+
+.equal {
+    padding: 20px;
+    border-radius: 40px;
+    width: 165px;
+    font-size: 20px;
+}
+
+.num-btn, .decimal {
+    background-color: hsl(0, 0%, 50%);
+    border: 1px solid hsl(0, 0%, 50%);
+}
+
+.num-btn:hover, .decimal:hover {
+    background-color: hsl(0, 0%, 80%);
+}
+
+.num-btn:active, .decimal:active {
+    background-color: hsl(0, 0%, 100%);
+}
+
+.operator-btn, .equal {
+    background-color: hsl(193, 74%, 23%);
+    border: 1px solid hsl(193, 74%, 23%);
+    color: white;
+    font-weight: bolder;
+}
+
+.operator-btn:hover, .equal:hover {
+    background-color: hsl(193, 74%, 30%);
+}
+
+.operator-btn:active, .equal:active {
+    background-color: hsl(193, 74%, 35%);
+}
+
+.clear-btn:hover, .del-btn:hover{
+    background-color: hsl(0, 0%, 80%);
+}
+
+.clear-btn:active, .del-btn:active{
+    background-color: hsl(0, 0%, 100%);
 }
