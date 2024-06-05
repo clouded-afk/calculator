@@ -31,6 +31,13 @@ let firstNumber = ""
 let secondNumber = ""
 let operatorChoice = ""
 
+const numberBtn = document.querySelectorAll(".num-btn");
+const operatorBtn = document.querySelectorAll(".operator-btn");
+const equalBtn = document.querySelector(".equal");
+const decimalbtn = document.querySelector(".decimal");
+const clearBtn = document.querySelector(".clear-btn");
+const delBtn = document.querySelector(".del-btn");
+
 function addition(firstNum, secondNum) {
     return firstNum + secondNum;
 };
@@ -66,3 +73,4 @@ function operate(operator, firstNum, secondNum) {
         return division(firstNum, secondNum);
     }
 };
+
