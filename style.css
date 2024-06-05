@@ -26,7 +26,22 @@
     padding: 10px;
     font-family: "Orbitron", sans-serif;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+}
+
+.previous-input, .current-input {
+    background-color: hsl(106, 9%, 46%);
+    width: 100%;   
+}
+
+.previous-input {
+    text-align: left;
+}
+
+.current-input {
+    font-size: 60px;
+    font-weight: 400;
+    text-align: right;
 }
 
 .button-container {
