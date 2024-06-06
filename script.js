@@ -30,6 +30,7 @@
 let firstNumber = "";
 let secondNumber = "";
 let operatorChoice = "";
+let displayValue = "";
 
 
 const numberBtn = document.querySelectorAll(".num-btn");
@@ -39,7 +40,8 @@ const decimalbtn = document.querySelector(".decimal");
 const clearBtn = document.querySelector(".clear-btn");
 const delBtn = document.querySelector(".del-btn");
 
-const currentInput = document.querySelector(".current-input");
+const currentDisplayValue = document.querySelector(".current-input");
+const previousDisplayValue = document.querySelector(".previous-input");
 
 function addition(firstNum, secondNum) {
     return firstNum + secondNum;
@@ -62,18 +64,18 @@ function multiplication(firstNum, secondNum) {
 };
 
 function operate(operator, firstNum, secondNum) {
-    let operatorChoice = operator;
-    let firstNumber = firstNum;
-    let secondNumber = secondNum;
+    operator = operatorChoice;
+    firstNum = Number(firstNumber);
+    secondNum = Number(secondNumber);
 
-    if (operatorChoice === "+") {
-        return addition(firstNumber, secondNumber);
-    } else if (operatorChoice === "-") {
-        return subtraction(firstNumber, secondNumber);
-    } else if (operatorChoice === "×") {
-        return multiplication(firstNumber, secondNumber);
-    } else if (operatorChoice === "÷") {
-        return division(firstNumber, secondNumber);
+    if (operator === "+") {
+        return addition(firstNum, secondNum);
+    } else if (operator === "-") {
+        return subtraction(firstNum, secondNum);
+    } else if (operator === "×") {
+        return multiplication(firstNum, secondNum);
+    } else if (operator === "÷") {
+        return division(firstNum, secondNum);
     }
 };
 
@@ -81,7 +83,36 @@ function clearDisplay() {
     firstNumber = ""
     secondNumber = ""
     operatorChoice = ""
-    currentInput.textContent = 0
+    currentDisplayValue.textContent = 0
 }
 
 clearBtn.addEventListener("click", clearDisplay)
+
+numberBtn.forEach((button) => {
+    button.addEventListener("click", () => {
+        if (operatorClicked === true) {
+            let secondValue = button.textContent;
+            secondNumber += secondValue;
+            currentDisplayValue.textContent = secondNumber;
+        } else {
+            let firstValue = button.textContent;
+            firstNumber += firstValue;
+            currentDisplayValue.textContent = firstNumber;
+        }
+    })
+})
+
+let operatorClicked = false;
+operatorBtn.forEach((button) => {
+    button.addEventListener("click", () => {
+        let currentOperator = button.textContent;
+        operatorChoice = currentOperator;
+        currentDisplayValue.textContent = operatorChoice
+        operatorClicked = true;
+    })
+})
+
+equalBtn.addEventListener("click", () => {
+    currentDisplayValue.textContent = operate(operatorChoice, firstNumber, secondNumber)
+})
+
