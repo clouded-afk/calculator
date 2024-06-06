@@ -30,8 +30,6 @@
 let firstNumber = "";
 let secondNumber = "";
 let operatorChoice = "";
-let displayValue = "";
-
 
 const numberBtn = document.querySelectorAll(".num-btn");
 const operatorBtn = document.querySelectorAll(".operator-btn");
@@ -39,7 +37,6 @@ const equalBtn = document.querySelector(".equal");
 const decimalbtn = document.querySelector(".decimal");
 const clearBtn = document.querySelector(".clear-btn");
 const delBtn = document.querySelector(".del-btn");
-
 const currentDisplayValue = document.querySelector(".current-input");
 const previousDisplayValue = document.querySelector(".previous-input");
 
@@ -83,36 +80,41 @@ function clearDisplay() {
     firstNumber = ""
     secondNumber = ""
     operatorChoice = ""
-    currentDisplayValue.textContent = 0
+    currentDisplayValue.textContent = "0"
+    previousDisplayValue.textContent = ""
 }
 
 clearBtn.addEventListener("click", clearDisplay)
 
+function multiDigit(number) {
+    if (currentDisplayValue.textContent === "0") {
+        currentDisplayValue.textContent = "";
+    }
+    currentDisplayValue.textContent += number
+}
+
 numberBtn.forEach((button) => {
-    button.addEventListener("click", () => {
-        if (operatorClicked === true) {
-            let secondValue = button.textContent;
-            secondNumber += secondValue;
-            currentDisplayValue.textContent = secondNumber;
-        } else {
-            let firstValue = button.textContent;
-            firstNumber += firstValue;
-            currentDisplayValue.textContent = firstNumber;
-        }
-    })
+    button.addEventListener("click", () => multiDigit(button.textContent))
 })
 
-let operatorClicked = false;
-operatorBtn.forEach((button) => {
-    button.addEventListener("click", () => {
-        let currentOperator = button.textContent;
-        operatorChoice = currentOperator;
-        currentDisplayValue.textContent = operatorChoice
-        operatorClicked = true;
-    })
+function startOperation(operator) {
+    if (operatorChoice === "") {
+        operatorChoice = operator
+    }
+    firstNumber = currentDisplayValue.textContent
+    previousDisplayValue.textContent = `${firstNumber} ${operatorChoice}`
+    currentDisplayValue.textContent = ""
+}
+
+operatorBtn.forEach((button) => { 
+    button.addEventListener("click", () => startOperation(button.textContent))
 })
 
-equalBtn.addEventListener("click", () => {
+function solveEquation() {
+    secondNumber = currentDisplayValue.textContent
     currentDisplayValue.textContent = operate(operatorChoice, firstNumber, secondNumber)
-})
+    previousDisplayValue.textContent = `${firstNumber} ${operatorChoice} ${secondNumber} =`
+    operatorChoice = ""
+}
 
+equalBtn.addEventListener("click", solveEquation)
