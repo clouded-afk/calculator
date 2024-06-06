@@ -122,3 +122,9 @@ equalBtn.addEventListener("click", solveEquation)
 function roundNumber(number) {
     return Math.round(number * 1000) / 1000
 }
+
+function delNumber() {
+    currentDisplayValue.textContent = currentDisplayValue.textContent.toString().slice(0, -1)
+}
+
+delBtn.addEventListener("click", delNumber)
