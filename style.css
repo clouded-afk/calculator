@@ -7,7 +7,7 @@
 
 .calculator-container {
     margin-top: 100px;
-    height: 600px;
+    min-height: 600px;
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -18,7 +18,7 @@
 }
 
 .display-container {
-    height: 100px;
+    min-height: 100px;
     background-color: hsl(106, 9%, 46%);
     width: 350px;
     border-radius: 10px;
@@ -31,7 +31,7 @@
 
 .previous-input, .current-input {
     background-color: hsl(106, 9%, 46%);
-    width: 100%;   
+    width: 100%; 
 }
 
 .previous-input {
@@ -39,9 +39,11 @@
 }
 
 .current-input {
-    font-size: 60px;
+    font-size: 40px;
     font-weight: 400;
     text-align: right;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .button-container {
@@ -117,4 +119,25 @@
 
 .clear-btn:active, .del-btn:active{
     background-color: hsl(0, 0%, 100%);
+}
+
+.footer {
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 10px;
+    width: 100%;
+    font-size: 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link, a:visited {
+    color: black;
+}
+
+a:hover {
+    color: white;
 }
