@@ -27,9 +27,10 @@
         // should only work if the user enters a number or operator, user should not be able to delete on a result of an operation
     // Add keyboard support
 
-let firstNumber = ""
-let secondNumber = ""
-let operatorChoice = ""
+let firstNumber = "";
+let secondNumber = "";
+let operatorChoice = "";
+
 
 const numberBtn = document.querySelectorAll(".num-btn");
 const operatorBtn = document.querySelectorAll(".operator-btn");
@@ -37,6 +38,8 @@ const equalBtn = document.querySelector(".equal");
 const decimalbtn = document.querySelector(".decimal");
 const clearBtn = document.querySelector(".clear-btn");
 const delBtn = document.querySelector(".del-btn");
+
+const currentInput = document.querySelector(".current-input");
 
 function addition(firstNum, secondNum) {
     return firstNum + secondNum;
@@ -59,18 +62,26 @@ function multiplication(firstNum, secondNum) {
 };
 
 function operate(operator, firstNum, secondNum) {
-    let operator = operatorChoice;
-    let firstNum = firstNumber;
-    let secondNum = secondNumber;
+    let operatorChoice = operator;
+    let firstNumber = firstNum;
+    let secondNumber = secondNum;
 
-    if (operator === "+") {
-        return addition(firstNum, secondNum);
-    } else if (operator === "-") {
-        return subtraction(firstNum, secondNum);
-    } else if (operator === "*") {
-        return multiplication(firstNum, secondNum);
-    } else if (operator === "/") {
-        return division(firstNum, secondNum);
+    if (operatorChoice === "+") {
+        return addition(firstNumber, secondNumber);
+    } else if (operatorChoice === "-") {
+        return subtraction(firstNumber, secondNumber);
+    } else if (operatorChoice === "×") {
+        return multiplication(firstNumber, secondNumber);
+    } else if (operatorChoice === "÷") {
+        return division(firstNumber, secondNumber);
     }
 };
 
+function clearDisplay() {
+    firstNumber = ""
+    secondNumber = ""
+    operatorChoice = ""
+    currentInput.textContent = 0
+}
+
+clearBtn.addEventListener("click", clearDisplay)
