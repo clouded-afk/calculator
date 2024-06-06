@@ -120,7 +120,7 @@ function solveEquation() {
 equalBtn.addEventListener("click", solveEquation)
 
 function roundNumber(number) {
-    return Math.round(number * 1000) / 1000
+    return Math.round(number * 10000) / 10000
 }
 
 function delNumber() {
