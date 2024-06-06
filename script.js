@@ -112,9 +112,13 @@ operatorBtn.forEach((button) => {
 
 function solveEquation() {
     secondNumber = currentDisplayValue.textContent
-    currentDisplayValue.textContent = operate(operatorChoice, firstNumber, secondNumber)
+    currentDisplayValue.textContent = roundNumber(operate(operatorChoice, firstNumber, secondNumber))
     previousDisplayValue.textContent = `${firstNumber} ${operatorChoice} ${secondNumber} =`
     operatorChoice = ""
 }
 
 equalBtn.addEventListener("click", solveEquation)
+
+function roundNumber(number) {
+    return Math.round(number * 1000) / 1000
+}
