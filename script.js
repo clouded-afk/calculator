@@ -27,104 +27,111 @@
         // should only work if the user enters a number or operator, user should not be able to delete on a result of an operation
     // Add keyboard support
 
-let firstNumber = "";
-let secondNumber = "";
-let operatorChoice = "";
+let firstNumber = ""
+let secondNumber = ""
+let selectedOperator = ""
 
-const numberBtn = document.querySelectorAll(".num-btn");
-const operatorBtn = document.querySelectorAll(".operator-btn");
-const equalBtn = document.querySelector(".equal");
-const decimalbtn = document.querySelector(".decimal");
-const clearBtn = document.querySelector(".clear-btn");
-const delBtn = document.querySelector(".del-btn");
-const currentDisplayValue = document.querySelector(".current-input");
-const previousDisplayValue = document.querySelector(".previous-input");
+const currentDisplayValue = document.querySelector(".current-input")
+const previousDisplayValue = document.querySelector(".previous-input")
+const numberBtns = document.querySelectorAll(".num-btn")
+const operatorBtns = document.querySelectorAll(".operator-btn")
+const equalsBtn = document.querySelector(".equal")
+const clearBtn = document.querySelector(".clear-btn")
+const delBtn = document.querySelector(".del-btn")
 
-function addition(firstNum, secondNum) {
-    return firstNum + secondNum;
+equalsBtn.disabled = true;
+// Functions for basic operations
+function addition(a, b) {
+    return a + b;
 };
 
-function subtraction(firstNum, secondNum) {
-    return firstNum - secondNum;
+function subtraction(a, b) {
+    return a - b;
 };
 
-function division(firstNum, secondNum) {
-    if (secondNum === 0) {
-        return "ERROR"
-    } else {
-        return firstNum / secondNum;
-    }
+function multiplication(a, b) {
+    return a * b;
 };
 
-function multiplication(firstNum, secondNum) {
-    return firstNum * secondNum;
+function division(a, b) {
+    return a / b;
 };
 
-function operate(operator, firstNum, secondNum) {
-    operator = operatorChoice;
-    firstNum = Number(firstNumber);
-    secondNum = Number(secondNumber);
+function operate(operator, a, b) {
+    a = Number(a);
+    b = Number(b);
 
     if (operator === "+") {
-        return addition(firstNum, secondNum);
-    } else if (operator === "-") {
-        return subtraction(firstNum, secondNum);
-    } else if (operator === "×") {
-        return multiplication(firstNum, secondNum);
-    } else if (operator === "÷") {
-        return division(firstNum, secondNum);
+        return addition(a, b);
     }
-};
-
-function clearDisplay() {
-    firstNumber = ""
-    secondNumber = ""
-    operatorChoice = ""
-    currentDisplayValue.textContent = "0"
-    previousDisplayValue.textContent = ""
+    if (operator === "-") {
+        return subtraction(a, b);
+    }
+    if (operator === "×") {
+        return multiplication(a, b);
+    }
+    if (operator === "÷") {
+        return division(a, b);
+    }
 }
 
-clearBtn.addEventListener("click", clearDisplay)
-
-function multiDigit(number) {
+function displaySelections(number) {
     if (currentDisplayValue.textContent === "0") {
         currentDisplayValue.textContent = "";
     }
-    currentDisplayValue.textContent += number
+    currentDisplayValue.textContent += number;
 }
 
-numberBtn.forEach((button) => {
-    button.addEventListener("click", () => multiDigit(button.textContent))
+numberBtns.forEach((button) => {
+    button.addEventListener("click", () => displaySelections(button.textContent))
 })
 
 function startOperation(operator) {
-    if (operatorChoice === "") {
-        operatorChoice = operator
+    if (selectedOperator === "") {
+        selectedOperator = operator
     }
     firstNumber = currentDisplayValue.textContent
-    previousDisplayValue.textContent = `${firstNumber} ${operatorChoice}`
+    previousDisplayValue.textContent = `${firstNumber} ${selectedOperator}`
     currentDisplayValue.textContent = ""
+    equalsBtn.disabled = false;
 }
 
-operatorBtn.forEach((button) => { 
+operatorBtns.forEach((button) => {
     button.addEventListener("click", () => startOperation(button.textContent))
 })
 
 function solveEquation() {
+    if (currentDisplayValue.textContent === "0" && selectedOperator === "÷") {
+        currentDisplayValue.textContent = "ERROR"
+        equalsBtn.disabled = true;
+        return
+    }
+    equalsBtn.disabled = false;
     secondNumber = currentDisplayValue.textContent
-    currentDisplayValue.textContent = roundNumber(operate(operatorChoice, firstNumber, secondNumber))
-    previousDisplayValue.textContent = `${firstNumber} ${operatorChoice} ${secondNumber} =`
-    operatorChoice = ""
+    currentDisplayValue.textContent = roundNumber(operate(selectedOperator, firstNumber, secondNumber))
+    previousDisplayValue.textContent = `${firstNumber} ${selectedOperator} ${secondNumber} =`
+    selectedOperator = ""
 }
 
-equalBtn.addEventListener("click", solveEquation)
+equalsBtn.addEventListener("click", solveEquation)
+
+function clearDisplay() {
+    firstNumber = ""
+    secondNumber = ""
+    selectedOperator = ""
+    currentDisplayValue.textContent = "0"
+    previousDisplayValue.textContent = ""
+    equalsBtn.disabled = true;
+}
+
+clearBtn.addEventListener("click", clearDisplay)
 
 function roundNumber(number) {
     return Math.round(number * 10000) / 10000
 }
 
-function delNumber() {
-    currentDisplayValue.textContent = currentDisplayValue.textContent.toString().slice(0, -1)
+function deleteDigit() {
+    currentDisplayValue.textcontent = currentDisplayValue.textContent.toString().slice(0, -1)
 }
 
-delBtn.addEventListener("click", delNumber)
+delBtn.addEventListener("click", deleteDigit)
