@@ -95,6 +95,9 @@ numberBtns.forEach((button) => {
 })
 
 function startOperation(operator) {
+    if (selectedOperator !== "") {
+        solveEquation()
+    }
     if (selectedOperator === "") {
         selectedOperator = operator
     }
@@ -107,7 +110,6 @@ function startOperation(operator) {
             button.disabled = true;
         })
     }
-
 }
 
 operatorBtns.forEach((button) => {
@@ -125,6 +127,7 @@ function solveEquation() {
             button.disabled = true;
         })
         delBtn.disabled = true;
+        decimalBtn.disabled = true;
         return
     }
     operatorBtns.forEach((button) =>{
@@ -153,6 +156,7 @@ function clearDisplay() {
         button.disabled = false;
     })
     delBtn.disabled = false;
+    decimalBtn.disabled = false;
 }
 
 clearBtn.addEventListener("click", clearDisplay)
