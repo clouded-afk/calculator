@@ -38,8 +38,13 @@ const operatorBtns = document.querySelectorAll(".operator-btn")
 const equalsBtn = document.querySelector(".equal")
 const clearBtn = document.querySelector(".clear-btn")
 const delBtn = document.querySelector(".del-btn")
+const decimalBtn = document.querySelector(".decimal")
 
 equalsBtn.disabled = true;
+operatorBtns.forEach((button) =>{
+    button.disabled = true;
+})
+
 // Functions for basic operations
 function addition(a, b) {
     return a + b;
@@ -80,6 +85,9 @@ function displaySelections(number) {
         currentDisplayValue.textContent = "";
     }
     currentDisplayValue.textContent += number;
+    operatorBtns.forEach((button) =>{
+        button.disabled = false;
+    })
 }
 
 numberBtns.forEach((button) => {
@@ -94,6 +102,12 @@ function startOperation(operator) {
     previousDisplayValue.textContent = `${firstNumber} ${selectedOperator}`
     currentDisplayValue.textContent = ""
     equalsBtn.disabled = false;
+    if (selectedOperator !== "") {
+        operatorBtns.forEach((button) =>{
+            button.disabled = true;
+        })
+    }
+
 }
 
 operatorBtns.forEach((button) => {
@@ -104,13 +118,23 @@ function solveEquation() {
     if (currentDisplayValue.textContent === "0" && selectedOperator === "÷") {
         currentDisplayValue.textContent = "ERROR"
         equalsBtn.disabled = true;
+        operatorBtns.forEach((button) =>{
+            button.disabled = true;
+        })
+        numberBtns.forEach((button) =>{
+            button.disabled = true;
+        })
+        delBtn.disabled = true;
         return
     }
-    equalsBtn.disabled = false;
+    operatorBtns.forEach((button) =>{
+        button.disabled = false;
+    })
     secondNumber = currentDisplayValue.textContent
     currentDisplayValue.textContent = roundNumber(operate(selectedOperator, firstNumber, secondNumber))
     previousDisplayValue.textContent = `${firstNumber} ${selectedOperator} ${secondNumber} =`
     selectedOperator = ""
+    equalsBtn.disabled = true;
 }
 
 equalsBtn.addEventListener("click", solveEquation)
@@ -122,6 +146,13 @@ function clearDisplay() {
     currentDisplayValue.textContent = "0"
     previousDisplayValue.textContent = ""
     equalsBtn.disabled = true;
+    operatorBtns.forEach((button) =>{
+        button.disabled = true;
+    })
+    numberBtns.forEach((button) =>{
+        button.disabled = false;
+    })
+    delBtn.disabled = false;
 }
 
 clearBtn.addEventListener("click", clearDisplay)
@@ -131,7 +162,19 @@ function roundNumber(number) {
 }
 
 function deleteDigit() {
-    currentDisplayValue.textcontent = currentDisplayValue.textContent.toString().slice(0, -1)
+    currentDisplayValue.textContent = currentDisplayValue.textContent.toString().slice(0, -1)
 }
 
 delBtn.addEventListener("click", deleteDigit)
+
+function addDecimal() {
+    if (currentDisplayValue.textContent === "") {
+        currentDisplayValue.textContent = "0"
+    } 
+    if (currentDisplayValue.textContent.includes(".")) {
+        return
+    }
+    currentDisplayValue.textContent += "."
+}
+
+decimalBtn.addEventListener("click", addDecimal)
