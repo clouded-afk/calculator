@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
 * {
-    background-color: bisque;
+    background-color: hsl(0, 0%, 50%);
     margin: auto;
 }
 
