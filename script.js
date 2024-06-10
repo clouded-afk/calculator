@@ -1,32 +1,4 @@
-// Calculator Project
-    // Create functions for basic math operations
-        // an operation will consist of the first number, operator, and a second number
-    // Create operate function which takes an operator and 2 numbers, and calls the respective function based on operator selected
-    // Create basic html calculator with buttons for each digit, each operator, an equals, and a clear button
-    // Create a display for the calculator
-        // Create a function to populate the display when number buttons are clicked
-            // display value should be stored in a variable for use later on
-    // Make it Work!
-        // store first number and second number that are input into the calculator, utilize the operator input by the user, and operate on the numbers when the user presses the equals key
-            // display the solution the operation when the operate function has been called
-        // Display an error message if the user tries to divide by 0
-
-// Potential Bugs
-    // Calculator should not evaluate more the a single pair of numbers at a time
-        // the user enters an operation, if the user enters another operator after the result has appeared the result will be the first number in the second operation
-    // Answers with long decimal points should be rounded so they do not overflow off the display
-    // Pressimg equals before entering all of the numbers could cause issues
-    // Pressing clear should wipe any existing data, pressing clear should be like a fresh start
-    // Dividing by zero could crash the app, this CANNOT happen
-
-// Extra Features
-    // Add decimal support
-        // ensure user can only use a decimal once per number
-        // decimal button should be disbaled if there is a decimal already in the display
-    // Add a backspace button
-        // should only work if the user enters a number or operator, user should not be able to delete on a result of an operation
-    // Add keyboard support
-
+// Variables to store the numbers and operator
 let firstNumber = ""
 let secondNumber = ""
 let selectedOperator = ""
@@ -40,82 +12,67 @@ const clearBtn = document.querySelector(".clear-btn")
 const delBtn = document.querySelector(".del-btn")
 const decimalBtn = document.querySelector(".decimal")
 
+
+// Disables the operators and equals on load to prevent use before any numbers are input
 equalsBtn.disabled = true;
 operatorBtns.forEach((button) =>{
     button.disabled = true;
 })
 
-// Functions for basic operations
-function addition(a, b) {
-    return a + b;
-};
-
-function subtraction(a, b) {
-    return a - b;
-};
-
-function multiplication(a, b) {
-    return a * b;
-};
-
-function division(a, b) {
-    return a / b;
-};
-
-function operate(operator, a, b) {
-    a = Number(a);
-    b = Number(b);
-
-    if (operator === "+") {
-        return addition(a, b);
-    }
-    if (operator === "-") {
-        return subtraction(a, b);
-    }
-    if (operator === "×") {
-        return multiplication(a, b);
-    }
-    if (operator === "÷") {
-        return division(a, b);
-    }
-}
-
-function displaySelections(number) {
-    if (currentDisplayValue.textContent === "0") {
-        currentDisplayValue.textContent = "";
-    }
-    currentDisplayValue.textContent += number;
-    operatorBtns.forEach((button) =>{
-        button.disabled = false;
-    })
-}
+// Event Listeners
+equalsBtn.addEventListener("click", solveEquation)
+clearBtn.addEventListener("click", clearDisplay)
+delBtn.addEventListener("click", deleteDigit)
+decimalBtn.addEventListener("click", addDecimal)
 
 numberBtns.forEach((button) => {
     button.addEventListener("click", () => displaySelections(button.textContent))
 })
 
-function startOperation(operator) {
-    if (selectedOperator !== "") {
-        solveEquation()
-    }
-    if (selectedOperator === "") {
-        selectedOperator = operator
-    }
-    firstNumber = currentDisplayValue.textContent
-    previousDisplayValue.textContent = `${firstNumber} ${selectedOperator}`
-    currentDisplayValue.textContent = ""
-    equalsBtn.disabled = false;
-    if (selectedOperator !== "") {
-        operatorBtns.forEach((button) =>{
-            button.disabled = true;
-        })
-    }
-}
-
 operatorBtns.forEach((button) => {
     button.addEventListener("click", () => startOperation(button.textContent))
 })
 
+// Function to allow deletion of the previous character
+function deleteDigit() {
+    currentDisplayValue.textContent = currentDisplayValue.textContent.toString().slice(0, -1)
+}
+
+// Clears the display, clears the respective variables, and disables the equals and ooperator buttons again to prevent use before numbers are input
+function clearDisplay() {
+    firstNumber = ""
+    secondNumber = ""
+    selectedOperator = ""
+    currentDisplayValue.textContent = "0"
+    previousDisplayValue.textContent = ""
+    equalsBtn.disabled = true;
+    operatorBtns.forEach((button) =>{
+        button.disabled = true;
+    })
+    numberBtns.forEach((button) =>{
+        button.disabled = false;
+    })
+    delBtn.disabled = false;
+    decimalBtn.disabled = false;
+}
+
+// Rounds any result to four decimal places
+function roundNumber(number) {
+    return Math.round(number * 10000) / 10000
+}
+
+// Allows the use of a decimal when inputing numbers
+function addDecimal() {
+    if (currentDisplayValue.textContent === "") {
+        currentDisplayValue.textContent = "0"
+    } 
+    if (currentDisplayValue.textContent.includes(".")) {
+        return
+    }
+    currentDisplayValue.textContent += "."
+}
+
+// Sets the value of the second number and solves the equation, if the user tries to divide by 0 it will display an error and lock all buttons except the clear button, so with an error they will have to reset the calculator
 function solveEquation() {
     if (currentDisplayValue.textContent === "0" && selectedOperator === "÷") {
         currentDisplayValue.textContent = "ERROR"
@@ -140,45 +97,68 @@ function solveEquation() {
     equalsBtn.disabled = true;
 }
 
-equalsBtn.addEventListener("click", solveEquation)
+// Starts the equation by setting the first number, and the operator for the equation
+function startOperation(operator) {
+    if (selectedOperator !== "") {
+        solveEquation()
+    }
+    if (selectedOperator === "") {
+        selectedOperator = operator
+    }
+    firstNumber = currentDisplayValue.textContent
+    previousDisplayValue.textContent = `${firstNumber} ${selectedOperator}`
+    currentDisplayValue.textContent = ""
+    equalsBtn.disabled = false;
+    if (selectedOperator !== "") {
+        operatorBtns.forEach((button) =>{
+            button.disabled = true;
+        })
+    }
+}
 
-function clearDisplay() {
-    firstNumber = ""
-    secondNumber = ""
-    selectedOperator = ""
-    currentDisplayValue.textContent = "0"
-    previousDisplayValue.textContent = ""
-    equalsBtn.disabled = true;
+// Displays the first number on the screen while the user presses the buttons
+function displaySelections(number) {
+    if (currentDisplayValue.textContent === "0") {
+        currentDisplayValue.textContent = "";
+    }
+    currentDisplayValue.textContent += number;
     operatorBtns.forEach((button) =>{
-        button.disabled = true;
-    })
-    numberBtns.forEach((button) =>{
         button.disabled = false;
     })
-    delBtn.disabled = false;
-    decimalBtn.disabled = false;
 }
 
-clearBtn.addEventListener("click", clearDisplay)
+// Returns the result of an operation based on the selected operator
+function operate(operator, a, b) {
+    a = Number(a);
+    b = Number(b);
 
-function roundNumber(number) {
-    return Math.round(number * 10000) / 10000
-}
-
-function deleteDigit() {
-    currentDisplayValue.textContent = currentDisplayValue.textContent.toString().slice(0, -1)
-}
-
-delBtn.addEventListener("click", deleteDigit)
-
-function addDecimal() {
-    if (currentDisplayValue.textContent === "") {
-        currentDisplayValue.textContent = "0"
-    } 
-    if (currentDisplayValue.textContent.includes(".")) {
-        return
+    if (operator === "+") {
+        return addition(a, b);
     }
-    currentDisplayValue.textContent += "."
+    if (operator === "-") {
+        return subtraction(a, b);
+    }
+    if (operator === "×") {
+        return multiplication(a, b);
+    }
+    if (operator === "÷") {
+        return division(a, b);
+    }
 }
 
-decimalBtn.addEventListener("click", addDecimal)
+// Basic math functions to produce the result of the equation
+function addition(a, b) {
+    return a + b;
+};
+
+function subtraction(a, b) {
+    return a - b;
+};
+
+function multiplication(a, b) {
+    return a * b;
+};
+
+function division(a, b) {
+    return a / b;
+};
